@@ -1,0 +1,16 @@
+apache2 ldap auth bind as user
+no proxy user necessary yay
+
+~~~~
+<Directory /var/www/html >
+       AuthType Basic
+       AuthBasicProvider ldap
+       AuthName "ldap"
+       AuthLDAPInitialBindAsUser on
+       AuthLDAPInitialBindPattern (.+) uid=$1,cn=users,cn=accounts,dc=sub,dc=domain,dc=tld
+       AuthLDAPURL "ldaps://kdc1.sub.domain.tld/CN=users,CN=accounts,DC=sub,DC=domain,dc=tld?uid,nsAccountLock?sub?(ObjectClass=*)"
+       require valid-user
+
+</Directory>
+
+~~~~
